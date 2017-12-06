@@ -1,4 +1,4 @@
-package systems.vostok.tda.service
+package systems.vostok.tda.component
 
 class TestComponent {
     static List mapperSimple = [
