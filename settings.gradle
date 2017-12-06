@@ -1,3 +1,2 @@
 rootProject.name = 'taxi-drive-libraries'
 include 'tda-district-mapper'
-
