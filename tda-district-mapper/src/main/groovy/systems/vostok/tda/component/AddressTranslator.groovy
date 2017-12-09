@@ -55,7 +55,22 @@ class AddressTranslator {
     }
 
     static List translateDataForLiteral(List mappingData) {
+        cloneMapping(mappingData).collect {
+            String rawBuildingsFrom = it.building.split('-')[0]
+            String rawBuildingsTo = it.building.split('-')[1]
 
+            if ([FRACTION].contains(getBuildingType(rawBuildingsFrom))) {
+                it << [buildingFrom: ((extractFirstDigits(rawBuildingsFrom) as Integer) + 1) as String]
+            } else {
+                it << [buildingFrom: rawBuildingsFrom as String]
+            }
+
+            if ([FRACTION].contains(getBuildingType(rawBuildingsTo))) {
+                it << [buildingTo: extractFirstDigits(rawBuildingsTo) ]
+            } else {
+                it << [buildingTo: rawBuildingsTo as String]
+            }
+        }
     }
 
 }

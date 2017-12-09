@@ -35,7 +35,7 @@ class AddressTranslatorTest {
         new AddressTranslator().getBuildingType(building)
     }
 
-
+/* Simple data mappers */
     List mapperDataSimple1 = [
             [streetId: 'test', building: '1-1/6', districtId: 'test'],
             [streetId: 'test', building: '1/6-24А', districtId: 'test'],
@@ -58,10 +58,46 @@ class AddressTranslatorTest {
             [streetId: 'test', building: '25-50Г', districtId: 'test', buildingFrom: '25', buildingTo: '50']
     ]
 
+/* Literal data mappers */
+    List mapperDataLiteral1 = [
+            [streetId: 'test', building: '1-1/6', districtId: 'test'],
+            [streetId: 'test', building: '1/6-24А', districtId: 'test'],
+            [streetId: 'test', building: '24Б-50', districtId: 'test']
+    ]
+
+    List expectedMapperLiteral1 = [
+            [streetId: 'test', building: '1-1/6', districtId: 'test', buildingFrom: '1', buildingTo: '1'],
+            [streetId: 'test', building: '1/6-24А', districtId: 'test', buildingFrom: '2', buildingTo: '24А'],
+            [streetId: 'test', building: '24Б-50', districtId: 'test', buildingFrom: '24Б', buildingTo: '50']
+    ]
+
+    List mapperDataLiteral2 = [
+            [streetId: 'test', building: '1-2', districtId: 'test'],
+            [streetId: 'test', building: '2/1-24', districtId: 'test'],
+            [streetId: 'test', building: '25-50А', districtId: 'test']
+    ]
+
+    List expectedMapperLiteral2 = [
+            [streetId: 'test', building: '1-2', districtId: 'test', buildingFrom: '1', buildingTo: '2'],
+            [streetId: 'test', building: '2/1-24', districtId: 'test', buildingFrom: '3', buildingTo: '24'],
+            [streetId: 'test', building: '25-50А', districtId: 'test', buildingFrom: '25', buildingTo: '50А']
+    ]
+
+/* Fraction data mappers */
+
+
     @DataProvider(name = 'mapper_translator_test')
     Object[][] mapperTranslatorParam() {
-        [[mapperDataSimple1, SIMPLE, expectedMapperSimple1],
-         [mapperDataSimple2, SIMPLE, expectedMapperSimple2]]
+        [
+         //[mapperDataSimple1, SIMPLE, expectedMapperSimple1],
+         //[mapperDataSimple2, SIMPLE, expectedMapperSimple2],
+
+         [mapperDataLiteral1, LITERAL, expectedMapperLiteral1],
+         [mapperDataLiteral2, LITERAL, expectedMapperLiteral2],
+
+
+
+        ]
     }
 
     @Test(dataProvider = 'mapper_translator_test')
