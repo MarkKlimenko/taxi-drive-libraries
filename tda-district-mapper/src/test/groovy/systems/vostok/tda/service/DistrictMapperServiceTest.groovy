@@ -8,28 +8,28 @@ import static org.testng.Assert.*
 class DistrictMapperServiceTest {
 
     static List mapperSimple = [
-            [streetId: 'Svetlanskaya', building: '1-24', districtId: 'Center'],
-            [streetId: 'Svetlanskaya', building: '25-50', districtId: 'Dalzavod'],
-            [streetId: 'Svetlanskaya', building: '51-106', districtId: 'Lugovaya']
+            [streetId: 'svt', building: '1-24', districtId: 'cnt'],
+            [streetId: 'svt', building: '25-50', districtId: 'dal'],
+            [streetId: 'svt', building: '51-106', districtId: 'lug']
     ]
 
     static List mapperLiteral = [
-            [streetId: 'Svetlanskaya', building: '1-24В', districtId: 'Center'],
-            [streetId: 'Svetlanskaya', building: '24В-24З', districtId: 'Dalzavod'],
-            [streetId: 'Svetlanskaya', building: '24З-106', districtId: 'Lugovaya']
+            [streetId: 'svt', building: '1-24В', districtId: 'cnt'],
+            [streetId: 'svt', building: '24В-24З', districtId: 'dal'],
+            [streetId: 'svt', building: '24З-106', districtId: 'lug']
     ]
 
     static List mapperDash = [
-            [streetId: 'Svetlanskaya', building: '1-24В', districtId: 'Center'],
-            [streetId: 'Svetlanskaya', building: '24В-24/3', districtId: 'Dalzavod'],
-            [streetId: 'Svetlanskaya', building: '24/4-106', districtId: 'Lugovaya']
+            [streetId: 'svt', building: '1-24В', districtId: 'cnt'],
+            [streetId: 'svt', building: '24В-24/3', districtId: 'dal'],
+            [streetId: 'svt', building: '24/4-106', districtId: 'lug']
     ]
 
 // Simple test suite
     @DataProvider(name = 'simple_mapper_test')
     Object[][] simpleMapperParam() {
-        [[[street: 'Svetlanskaya', building: '25'], 'Dalzavod'],
-         [[street: 'Svetlanskaya', building: '3'], 'Center']]
+        [[[streetId: 'svt', building: '25'], 'dal'],
+         [[streetId: 'svt', building: '3'], 'cnt']]
     }
 
     @Test(dataProvider = 'simple_mapper_test')
@@ -42,11 +42,11 @@ class DistrictMapperServiceTest {
 // Exception handler suite
     @DataProvider(name = 'exception_mapper_test')
     Object[][] exceptionMapperParam() {
-        [[[street: 'Svetlanskaya', building: ''], new IllegalArgumentException('no_property_supplied')],
-         [[street: 'Svetlanskaya', building: '110'], new IllegalArgumentException('building_out_of_range')],
-         [[street: 'Svetlanskaya', building: '3АВ'], new IllegalArgumentException('illegal_literal_format')],
-         [[street: 'Svetlanskaya', building: '3/a'], new IllegalArgumentException('illegal_literal_format')],
-         [[street: 'Svetlanskaya', building: '3F'], new IllegalArgumentException('wrong_literal_language')]]
+        [[[street: 'svt', building: ''], new IllegalArgumentException('no_property_supplied')],
+         [[street: 'svt', building: '110'], new IllegalArgumentException('building_out_of_range')],
+         [[street: 'svt', building: '3АВ'], new IllegalArgumentException('illegal_literal_format')],
+         [[street: 'svt', building: '3/a'], new IllegalArgumentException('illegal_literal_format')],
+         [[street: 'svt', building: '3F'], new IllegalArgumentException('wrong_literal_language')]]
     }
 
     @Test(dataProvider = 'exception_mapper_test')
