@@ -25,7 +25,7 @@ class DistrictMapperServiceTest {
             [streetId: 'Svetlanskaya', building: '24/4-106', districtId: 'Lugovaya']
     ]
 
-
+// Simple test suite
     @DataProvider(name = 'simple_mapper_test')
     Object[][] simpleMapperParam() {
         [[[street: 'Svetlanskaya', building: '25'], 'Dalzavod'],
@@ -39,6 +39,7 @@ class DistrictMapperServiceTest {
     }
 
 
+// Exception handler suite
     @DataProvider(name = 'exception_mapper_test')
     Object[][] exceptionMapperParam() {
         [[[street: 'Svetlanskaya', building: ''], new IllegalArgumentException('no_property_supplied')],
