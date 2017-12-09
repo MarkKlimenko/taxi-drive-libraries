@@ -21,7 +21,7 @@ class TestComponent {
 
 
     static void main(String[] args) {
-        Map initialSimpleData = [street: 'Svetlanskaya', building: '25']
+        Map initialSimpleData = [streetId: 'Svetlanskaya', building: '25']
         testMapperSimple(initialSimpleData)
 
         Map initialLiteralData = [street: 'Svetlanskaya', building: '3A']

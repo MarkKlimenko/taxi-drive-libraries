@@ -15,7 +15,7 @@ class AddressTranslator {
             SIMPLE
         } else if (building.contains('/')) {
             FRACTION
-        } else if (building.matches(".*[А-Я].*")) {
+        } else if (building.matches(/.*[А-Я]/)) {
             LITERAL
         } else {
             throw new IllegalBuildingFormatException(building)
@@ -36,7 +36,7 @@ class AddressTranslator {
         }
     }
 
-    static List translateDataForSimple(List mappingData) {
+    protected static List translateDataForSimple(List mappingData) {
         cloneMapping(mappingData).collect {
             String rawBuildingsFrom = it.building.split('-')[0]
 
@@ -50,7 +50,7 @@ class AddressTranslator {
         }
     }
 
-    static List translateDataForComplex(List mappingData, BuildingType buildingType) {
+    protected static List translateDataForComplex(List mappingData, BuildingType buildingType) {
         cloneMapping(mappingData).collect {
             String rawBuildingsFrom = it.building.split('-')[0]
             String rawBuildingsTo = it.building.split('-')[1]

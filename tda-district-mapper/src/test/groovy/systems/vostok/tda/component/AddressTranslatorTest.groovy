@@ -30,7 +30,7 @@ class AddressTranslatorTest {
          ['test24']]
     }
 
-    @Test(dataProvider = 'building_type_exception_test', expectedExceptions = IllegalBuildingFormatException.class)
+        @Test(dataProvider = 'building_type_exception_test', expectedExceptions = IllegalBuildingFormatException.class)
     void buildingTypeExceptionTest(String building) {
         new AddressTranslator().getBuildingType(building)
     }
