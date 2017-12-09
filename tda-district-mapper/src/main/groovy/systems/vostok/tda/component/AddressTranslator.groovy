@@ -28,10 +28,10 @@ class AddressTranslator {
                 translateDataForSimple(mappingData)
                 break
             case FRACTION:
-                translateDataForFraction(mappingData)
+                translateDataForComplex(mappingData, buildingType)
                 break
             case LITERAL:
-                translateDataForLiteral(mappingData)
+                translateDataForComplex(mappingData, buildingType)
                 break
         }
     }
@@ -50,27 +50,22 @@ class AddressTranslator {
         }
     }
 
-    static List translateDataForFraction(List mappingData) {
-
-    }
-
-    static List translateDataForLiteral(List mappingData) {
+    static List translateDataForComplex(List mappingData, BuildingType buildingType) {
         cloneMapping(mappingData).collect {
             String rawBuildingsFrom = it.building.split('-')[0]
             String rawBuildingsTo = it.building.split('-')[1]
 
-            if ([FRACTION].contains(getBuildingType(rawBuildingsFrom))) {
-                it << [buildingFrom: ((extractFirstDigits(rawBuildingsFrom) as Integer) + 1) as String]
-            } else {
+            if ([buildingType, SIMPLE].contains(getBuildingType(rawBuildingsFrom))) {
                 it << [buildingFrom: rawBuildingsFrom as String]
+            } else {
+                it << [buildingFrom: ((extractFirstDigits(rawBuildingsFrom) as Integer) + 1) as String]
             }
 
-            if ([FRACTION].contains(getBuildingType(rawBuildingsTo))) {
-                it << [buildingTo: extractFirstDigits(rawBuildingsTo) ]
-            } else {
+            if ([buildingType, SIMPLE].contains(getBuildingType(rawBuildingsTo))) {
                 it << [buildingTo: rawBuildingsTo as String]
+            } else {
+                it << [buildingTo: extractFirstDigits(rawBuildingsTo)]
             }
         }
     }
-
 }

@@ -1,6 +1,6 @@
 package systems.vostok.tda.component
 
 class AccuracyChecker {
-// mapper data checker
+    // mapper data checker
     // building number checker
 }

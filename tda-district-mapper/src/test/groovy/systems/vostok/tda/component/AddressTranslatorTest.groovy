@@ -61,13 +61,13 @@ class AddressTranslatorTest {
 /* Literal data mappers */
     List mapperDataLiteral1 = [
             [streetId: 'test', building: '1-1/6', districtId: 'test'],
-            [streetId: 'test', building: '1/6-24А', districtId: 'test'],
+            [streetId: 'test', building: '1/7-24А', districtId: 'test'],
             [streetId: 'test', building: '24Б-50', districtId: 'test']
     ]
 
     List expectedMapperLiteral1 = [
             [streetId: 'test', building: '1-1/6', districtId: 'test', buildingFrom: '1', buildingTo: '1'],
-            [streetId: 'test', building: '1/6-24А', districtId: 'test', buildingFrom: '2', buildingTo: '24А'],
+            [streetId: 'test', building: '1/7-24А', districtId: 'test', buildingFrom: '2', buildingTo: '24А'],
             [streetId: 'test', building: '24Б-50', districtId: 'test', buildingFrom: '24Б', buildingTo: '50']
     ]
 
@@ -84,20 +84,40 @@ class AddressTranslatorTest {
     ]
 
 /* Fraction data mappers */
+    List mapperDataFraction1 = [
+            [streetId: 'test', building: '1-1/6', districtId: 'test'],
+            [streetId: 'test', building: '1/7-24А', districtId: 'test'],
+            [streetId: 'test', building: '24Б-50', districtId: 'test']
+    ]
 
+    List expectedMapperFraction1 = [
+            [streetId: 'test', building: '1-1/6', districtId: 'test', buildingFrom: '1', buildingTo: '1/6'],
+            [streetId: 'test', building: '1/7-24А', districtId: 'test', buildingFrom: '1/7', buildingTo: '24'],
+            [streetId: 'test', building: '24Б-50', districtId: 'test', buildingFrom: '25', buildingTo: '50']
+    ]
+
+    List mapperDataFraction2 = [
+            [streetId: 'test', building: '1-2', districtId: 'test'],
+            [streetId: 'test', building: '2/1-24', districtId: 'test'],
+            [streetId: 'test', building: '25-50/7', districtId: 'test']
+    ]
+
+    List expectedMapperFraction2 = [
+            [streetId: 'test', building: '1-2', districtId: 'test', buildingFrom: '1', buildingTo: '2'],
+            [streetId: 'test', building: '2/1-24', districtId: 'test', buildingFrom: '2/1', buildingTo: '24'],
+            [streetId: 'test', building: '25-50/7', districtId: 'test', buildingFrom: '25', buildingTo: '50/7']
+    ]
 
     @DataProvider(name = 'mapper_translator_test')
     Object[][] mapperTranslatorParam() {
-        [
-         //[mapperDataSimple1, SIMPLE, expectedMapperSimple1],
-         //[mapperDataSimple2, SIMPLE, expectedMapperSimple2],
+        [[mapperDataSimple1, SIMPLE, expectedMapperSimple1],
+         [mapperDataSimple2, SIMPLE, expectedMapperSimple2],
 
          [mapperDataLiteral1, LITERAL, expectedMapperLiteral1],
          [mapperDataLiteral2, LITERAL, expectedMapperLiteral2],
 
-
-
-        ]
+         [mapperDataFraction1, FRACTION, expectedMapperFraction1],
+         [mapperDataFraction2, FRACTION, expectedMapperFraction2]]
     }
 
     @Test(dataProvider = 'mapper_translator_test')
