@@ -6,7 +6,7 @@ import systems.vostok.tda.exception.IllegalBuildingFormatException
 import systems.vostok.tda.util.constants.BuildingType
 
 import static org.testng.Assert.assertEquals
-import static BuildingType.*
+import static systems.vostok.tda.util.constants.BuildingType.*
 
 class AddressTranslatorTest {
 

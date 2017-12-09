@@ -21,6 +21,11 @@ repositories {
     mavenCentral()
 }
 
+test {
+    useTestNG{
+    }
+}
+
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.3.11'
 

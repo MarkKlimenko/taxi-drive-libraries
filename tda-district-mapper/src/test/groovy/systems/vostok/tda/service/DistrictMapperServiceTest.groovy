@@ -39,21 +39,4 @@ class DistrictMapperServiceTest {
     }
 
 
-// Exception handler suite
-    @DataProvider(name = 'exception_mapper_test')
-    Object[][] exceptionMapperParam() {
-        [[[street: 'svt', building: ''], new IllegalArgumentException('no_property_supplied')],
-         [[street: 'svt', building: '110'], new IllegalArgumentException('building_out_of_range')],
-         [[street: 'svt', building: '3АВ'], new IllegalArgumentException('illegal_literal_format')],
-         [[street: 'svt', building: '3/a'], new IllegalArgumentException('illegal_literal_format')],
-         [[street: 'svt', building: '3F'], new IllegalArgumentException('wrong_literal_language')]]
-    }
-
-    @Test(dataProvider = 'exception_mapper_test')
-    void exceptionMapperTest(Map address, String expected) {
-        new DistrictMapperService().getDistrict(mapperSimple, address)
-                .with { assertEquals(it, expected) }
-    }
-
-
 }
