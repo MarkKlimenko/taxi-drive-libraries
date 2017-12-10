@@ -5,6 +5,7 @@ import org.testng.annotations.Test
 import systems.vostok.tda.exception.IllegalBuildingFormatException
 import systems.vostok.tda.exception.IllegalEntityIdFormatException
 import systems.vostok.tda.exception.NoMapperDataException
+import systems.vostok.tda.exception.NotCompatibleMapperException
 
 import static org.testng.Assert.assertEquals
 
@@ -78,5 +79,17 @@ class AccuracyCheckerTest {
             expectedExceptions = [IllegalBuildingFormatException.class, IllegalEntityIdFormatException.class, NoMapperDataException.class])
     void mapperCheckerExceptionTest(List mapper) {
         new AccuracyChecker().checkMapperConsistence(mapper)
+    }
+
+
+    @Test
+    void mapperCompatibilityTest() {
+        new AccuracyChecker().checkAddressMapperCompatibility([streetId: 'test', building: '3'], mapperData)
+                .with { assertEquals(it, true) }
+    }
+
+    @Test(expectedExceptions = [NotCompatibleMapperException.class])
+    void mapperCompatibilityExceptionTest() {
+        new AccuracyChecker().checkAddressMapperCompatibility([streetId: 'test_another_id', building: '3'], mapperData)
     }
 }

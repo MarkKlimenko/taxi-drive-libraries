@@ -34,8 +34,8 @@ dependencies {
 }
 
 bintray {
-    user = ''
-    key = ''
+    user = bintrayUser
+    key = bintrayKey
     publications = ['TdaDistrictMapper']
     pkg {
         userOrg = 'hurryfox'

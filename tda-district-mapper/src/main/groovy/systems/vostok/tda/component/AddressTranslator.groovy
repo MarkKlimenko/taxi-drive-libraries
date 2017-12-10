@@ -36,6 +36,13 @@ class AddressTranslator {
         }
     }
 
+    static Map translateSingleMapperToSimple(Map singleMapper) {
+        Map result = singleMapper.clone() as Map
+
+        result << [ buildingFrom: extractFirstDigits(singleMapper.buildingFrom),
+                    buildingTo: extractFirstDigits(singleMapper.buildingTo) ]
+    }
+
     protected static List translateDataForSimple(List mappingData) {
         cloneMapping(mappingData).collect {
             String rawBuildingsFrom = it.building.split('-')[0]

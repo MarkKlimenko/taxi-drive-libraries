@@ -13,6 +13,7 @@ class DistrictMapperService {
     String getDistrict(List mapperData, Map address) {
         checkAddressConsistence(address)
         checkMapperConsistence(mapperData)
+        checkAddressMapperCompatibility(address, mapperData)
 
         BuildingType buildingType = getBuildingType(address.building)
         List adoptedMapperData = translateMapper(mapperData, buildingType)
