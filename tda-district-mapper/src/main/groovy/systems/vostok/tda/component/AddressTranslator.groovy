@@ -45,33 +45,41 @@ class AddressTranslator {
 
     protected static List translateDataForSimple(List mappingData) {
         cloneMapping(mappingData).collect {
-            String rawBuildingsFrom = it.building.split('-')[0]
-
-            if ([FRACTION, LITERAL].contains(getBuildingType(rawBuildingsFrom))) {
-                it << [buildingFrom: ((extractFirstDigits(rawBuildingsFrom) as Integer) + 1) as String]
+            if(it.building == '') {
+                it
             } else {
-                it << [buildingFrom: extractFirstDigits(rawBuildingsFrom)]
-            }
+                String rawBuildingsFrom = it.building.split('-')[0]
 
-            it << [buildingTo: extractFirstDigits(it.building.split('-')[1] as String)]
+                if ([FRACTION, LITERAL].contains(getBuildingType(rawBuildingsFrom))) {
+                    it << [buildingFrom: ((extractFirstDigits(rawBuildingsFrom) as Integer) + 1) as String]
+                } else {
+                    it << [buildingFrom: extractFirstDigits(rawBuildingsFrom)]
+                }
+
+                it << [buildingTo: extractFirstDigits(it.building.split('-')[1] as String)]
+            }
         }
     }
 
     protected static List translateDataForComplex(List mappingData, BuildingType buildingType) {
         cloneMapping(mappingData).collect {
-            String rawBuildingsFrom = it.building.split('-')[0]
-            String rawBuildingsTo = it.building.split('-')[1]
-
-            if ([buildingType, SIMPLE].contains(getBuildingType(rawBuildingsFrom))) {
-                it << [buildingFrom: rawBuildingsFrom as String]
+            if(it.building == '') {
+                it
             } else {
-                it << [buildingFrom: ((extractFirstDigits(rawBuildingsFrom) as Integer) + 1) as String]
-            }
+                String rawBuildingsFrom = it.building.split('-')[0]
+                String rawBuildingsTo = it.building.split('-')[1]
 
-            if ([buildingType, SIMPLE].contains(getBuildingType(rawBuildingsTo))) {
-                it << [buildingTo: rawBuildingsTo as String]
-            } else {
-                it << [buildingTo: extractFirstDigits(rawBuildingsTo)]
+                if ([buildingType, SIMPLE].contains(getBuildingType(rawBuildingsFrom))) {
+                    it << [buildingFrom: rawBuildingsFrom as String]
+                } else {
+                    it << [buildingFrom: ((extractFirstDigits(rawBuildingsFrom) as Integer) + 1) as String]
+                }
+
+                if ([buildingType, SIMPLE].contains(getBuildingType(rawBuildingsTo))) {
+                    it << [buildingTo: rawBuildingsTo as String]
+                } else {
+                    it << [buildingTo: extractFirstDigits(rawBuildingsTo)]
+                }
             }
         }
     }

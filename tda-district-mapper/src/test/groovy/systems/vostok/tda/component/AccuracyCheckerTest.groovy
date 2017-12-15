@@ -50,6 +50,7 @@ class AccuracyCheckerTest {
 
 
     List mapperData = [
+            [streetId: 'test', building: '', districtId: 'test'],
             [streetId: 'test', building: '1-1/6', districtId: 'test'],
             [streetId: 'test', building: '1/6-24А', districtId: 'test'],
             [streetId: 'test', building: '24Б-50', districtId: 'test']

@@ -3,9 +3,13 @@ package systems.vostok.tda.service
 import org.testng.annotations.DataProvider
 import org.testng.annotations.Test
 
-import static org.testng.Assert.*
+import static org.testng.Assert.assertEquals
 
 class DistrictMapperServiceTest {
+
+    static List mapperEmpty = [
+            [streetId: 'svt', building: '', districtId: 'cnt']
+    ]
 
     static List mapperSimple = [
             [streetId: 'svt', building: '1-24', districtId: 'cnt'],
@@ -41,7 +45,9 @@ class DistrictMapperServiceTest {
     @DataProvider(name = 'mapper_test')
     Object[][] mapperParam() {
         [
-                    [[streetId: 'svt', building: '25'], mapperSimple, 'dal'],
+                [[streetId: 'svt', building: '24'], mapperEmpty, 'cnt'],
+
+                [[streetId: 'svt', building: '25'], mapperSimple, 'dal'],
                 [[streetId: 'svt', building: '3'], mapperSimple, 'cnt'],
                 [[streetId: 'svt', building: '3'], mapperLiteral, 'cnt'],
                 [[streetId: 'svt', building: '24'], mapperLiteral, 'cnt'],

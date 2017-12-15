@@ -20,8 +20,10 @@ class AccuracyChecker {
         mapper.each {
             checkEntityId(it.streetId as String)
             checkEntityId(it.districtId as String)
-            checkBuilding(it.building.split('-')[0] as String)
-            checkBuilding(it.building.split('-')[1] as String)
+            if(it.building != '') {
+                checkBuilding(it.building.split('-')[0] as String)
+                checkBuilding(it.building.split('-')[1] as String)
+            }
         }
         true
     }

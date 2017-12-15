@@ -37,12 +37,14 @@ class AddressTranslatorTest {
 
 /* Simple data mappers */
     List mapperDataSimple1 = [
+            [streetId: 'test', building: '', districtId: 'test'],
             [streetId: 'test', building: '1-1/6', districtId: 'test'],
             [streetId: 'test', building: '1/6-24А', districtId: 'test'],
             [streetId: 'test', building: '24Б-50', districtId: 'test']
     ]
 
     List expectedMapperSimple1 = [
+            [streetId: 'test', building: '', districtId: 'test'],
             [streetId: 'test', building: '1-1/6', districtId: 'test', buildingFrom: '1', buildingTo: '1'],
             [streetId: 'test', building: '1/6-24А', districtId: 'test', buildingFrom: '2', buildingTo: '24'],
             [streetId: 'test', building: '24Б-50', districtId: 'test', buildingFrom: '25', buildingTo: '50']
@@ -60,12 +62,14 @@ class AddressTranslatorTest {
 
 /* Literal data mappers */
     List mapperDataLiteral1 = [
+            [streetId: 'test', building: '', districtId: 'test'],
             [streetId: 'test', building: '1-1/6', districtId: 'test'],
             [streetId: 'test', building: '1/7-24А', districtId: 'test'],
             [streetId: 'test', building: '24Б-50', districtId: 'test']
     ]
 
     List expectedMapperLiteral1 = [
+            [streetId: 'test', building: '', districtId: 'test'],
             [streetId: 'test', building: '1-1/6', districtId: 'test', buildingFrom: '1', buildingTo: '1'],
             [streetId: 'test', building: '1/7-24А', districtId: 'test', buildingFrom: '2', buildingTo: '24А'],
             [streetId: 'test', building: '24Б-50', districtId: 'test', buildingFrom: '24Б', buildingTo: '50']

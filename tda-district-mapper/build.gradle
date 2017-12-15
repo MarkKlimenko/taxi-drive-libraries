@@ -55,9 +55,19 @@ publishing {
     publications {
         TdaDistrictMapper(MavenPublication) {
             from components.java
+            artifact sourcesJar
             groupId group
             artifactId 'tda-district-mapper'
             version projectVersion
         }
     }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives sourcesJar
 }

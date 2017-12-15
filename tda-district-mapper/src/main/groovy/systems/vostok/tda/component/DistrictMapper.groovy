@@ -12,12 +12,16 @@ import static systems.vostok.tda.util.constants.BuildingType.*
 class DistrictMapper {
 
     static String mapAddressToDistrict(List adoptedMapperData, String building, BuildingType buildingType) {
-        Map properMapper = adoptedMapperData.find { checkAccordance(it as Map, building, buildingType) } as Map
-
-        if (properMapper) {
-            return properMapper.districtId
+        if(adoptedMapperData.first().building == '') {
+            adoptedMapperData.first().districtId
         } else {
-            throw new NoTargetDistrictException()
+            Map properMapper = adoptedMapperData.find { checkAccordance(it as Map, building, buildingType) } as Map
+
+            if (properMapper) {
+                properMapper.districtId
+            } else {
+                throw new NoTargetDistrictException()
+            }
         }
     }
 
