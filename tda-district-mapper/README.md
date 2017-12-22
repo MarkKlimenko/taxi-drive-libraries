@@ -19,5 +19,5 @@ DistrictMapperService returns district id 'lug' for target address
 
 ### Publish library
 <pre>
-gradlew bintrayUpload -PbintrayUser= -PbintrayKey=
+gradlew :tda-district-mapper:bintrayUpload -PbintrayUser= -PbintrayKey=
 </pre>
