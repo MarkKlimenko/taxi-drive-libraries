@@ -9,7 +9,7 @@ import system.vostok.tda.util.CellValueUtil
 
 class ExcelParserService {
 
-    List parseDocument(Object file, Integer sheetIndex, String documentType) {
+    List<String> parseDocument(Object file, Integer sheetIndex, String documentType) {
         [MIRROR_DIAGONAL: { mirrorDiagonalExcelToList(file, sheetIndex) },
          PLAIN_HEADER   : { plainHeaderExcelToList(file, sheetIndex) }]
                 ."${documentType}"
