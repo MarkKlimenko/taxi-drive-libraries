@@ -1,30 +1,33 @@
 package system.vostok.tda.util
 
 import org.apache.poi.ss.usermodel.Cell
+import org.apache.poi.ss.usermodel.CellValue
 
 import java.text.DecimalFormat
 
 class CellValueUtil {
-    static String getCellValue(Cell cell, String cellType) {
-        switch (cellType) {
-            case 'mixed':
-                return getMixedCellValue(cell)
-            case 'number':
-                return cell.getNumericCellValue() as String
-            case 'string':
-                return cell.getStringCellValue().toString()
+    static String getCellValue(CellValue cell, String cellType) {
+        if(cell) {
+            switch (cellType) {
+                case 'mixed':
+                    return getMixedCellValue(cell)
+                case 'number':
+                    return cell.getNumberValue() as String
+                case 'string':
+                    return cell.getStringValue().toString()
+            }
         }
         null
     }
 
-    static String getMixedCellValue(Cell cell) {
+    static String getMixedCellValue(CellValue cell) {
         switch (cell.getCellType()) {
             case Cell.CELL_TYPE_STRING:
-                return cell.getStringCellValue()
+                return cell.getStringValue()
             case Cell.CELL_TYPE_NUMERIC:
-                return formatNumericValue(cell.getNumericCellValue())
+                return formatNumericValue(cell.getNumberValue())
             case Cell.CELL_TYPE_BOOLEAN:
-                return cell.getBooleanCellValue()
+                return cell.getBooleanValue()
         }
         null
     }

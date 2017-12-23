@@ -1,7 +1,9 @@
 package system.vostok.tda.service
 
 import org.apache.poi.ss.usermodel.Cell
+import org.apache.poi.ss.usermodel.FormulaEvaluator
 import org.apache.poi.ss.usermodel.Row
+import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import system.vostok.tda.util.CellValueUtil
 
@@ -16,7 +18,9 @@ class ExcelParserService {
 
     static List plainHeaderExcelToList(Object file, Integer sheetIndex) {
         List fileContent = []
-        Iterator<Row> rowIterator = new XSSFWorkbook(file)
+        Workbook wb = new XSSFWorkbook(file)
+        FormulaEvaluator evaluator = wb.getCreationHelper().createFormulaEvaluator()
+        Iterator<Row> rowIterator = wb
                 .getSheetAt(sheetIndex)
                 .iterator()
 
@@ -25,7 +29,7 @@ class ExcelParserService {
             Iterator<Cell> cellIterator = rowIterator.next().iterator()
 
             while (cellIterator.hasNext()) {
-                rowContent << CellValueUtil.getCellValue(cellIterator.next(), 'mixed')
+                rowContent << CellValueUtil.getCellValue(evaluator.evaluate(cellIterator.next()), 'mixed')
             }
             fileContent << rowContent
         }
@@ -33,6 +37,29 @@ class ExcelParserService {
     }
 
     static List mirrorDiagonalExcelToList(Object file, Integer sheetIndex) {
+        List header = []
+        List result = []
 
+        plainHeaderExcelToList(file, sheetIndex)
+                .with { getRidOfEmptyCells(it) }
+                .eachWithIndex { row, rowIndex ->
+                    if (rowIndex == 0) {
+                        header = row
+                    } else {
+                        String from = row.first()
+                        row.eachWithIndex { cell, cellIndex ->
+                            if (cellIndex != 0) {
+                                result << [ from, header[cellIndex - 1], cell ]
+                            }
+                        }
+                    }
+                }
+        result
+    }
+
+    static List getRidOfEmptyCells(List table) {
+        table.findAll { it }
+                .collect { it.findAll { it } }
+                .findAll { it }
     }
 }
