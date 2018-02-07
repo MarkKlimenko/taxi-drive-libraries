@@ -20,9 +20,7 @@ class ExcelParserService {
         List fileContent = []
         Workbook wb = new XSSFWorkbook(file)
         FormulaEvaluator evaluator = wb.getCreationHelper().createFormulaEvaluator()
-        Iterator<Row> rowIterator = wb
-                .getSheetAt(sheetIndex)
-                .iterator()
+        Iterator<Row> rowIterator = wb.getSheetAt(sheetIndex).iterator()
 
         while (rowIterator.hasNext()) {
             List rowContent = []
@@ -43,17 +41,17 @@ class ExcelParserService {
         plainHeaderExcelToList(file, sheetIndex)
                 .with { getRidOfEmptyCells(it) }
                 .eachWithIndex { row, rowIndex ->
-                    if (rowIndex == 0) {
-                        header = row
-                    } else {
-                        String from = row.first()
-                        row.eachWithIndex { cell, cellIndex ->
-                            if (cellIndex != 0) {
-                                result << [ from, header[cellIndex - 1], cell ]
-                            }
-                        }
+            if (rowIndex == 0) {
+                header = row
+            } else {
+                String from = row.first()
+                row.eachWithIndex { cell, cellIndex ->
+                    if (cellIndex != 0) {
+                        result << [from, header[cellIndex - 1], cell]
                     }
                 }
+            }
+        }
         result
     }
 
