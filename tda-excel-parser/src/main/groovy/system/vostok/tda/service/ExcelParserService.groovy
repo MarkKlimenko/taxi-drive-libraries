@@ -6,6 +6,7 @@ import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import system.vostok.tda.util.CellValueUtil
+import system.vostok.tda.util.CellValueUtilT
 
 class ExcelParserService {
 
@@ -19,7 +20,6 @@ class ExcelParserService {
     static List plainHeaderExcelToList(Object file, Integer sheetIndex) {
         List fileContent = []
         Workbook wb = new XSSFWorkbook(file)
-        FormulaEvaluator evaluator = wb.getCreationHelper().createFormulaEvaluator()
         Iterator<Row> rowIterator = wb.getSheetAt(sheetIndex).iterator()
 
         while (rowIterator.hasNext()) {
@@ -27,7 +27,7 @@ class ExcelParserService {
             Iterator<Cell> cellIterator = rowIterator.next().iterator()
 
             while (cellIterator.hasNext()) {
-                rowContent << CellValueUtil.getCellValue(evaluator.evaluate(cellIterator.next()), 'mixed')
+                rowContent << CellValueUtil.getCellValue(cellIterator.next())
             }
             fileContent << rowContent
         }

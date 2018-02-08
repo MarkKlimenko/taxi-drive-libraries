@@ -5,7 +5,7 @@ import org.apache.poi.ss.usermodel.CellValue
 
 import java.text.DecimalFormat
 
-class CellValueUtil {
+class CellValueUtilT {
     static String getCellValue(CellValue cell, String cellType) {
         if (cell) {
             switch (cellType) {
