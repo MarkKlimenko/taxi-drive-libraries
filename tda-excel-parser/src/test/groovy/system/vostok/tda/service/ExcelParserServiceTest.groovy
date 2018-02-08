@@ -11,7 +11,7 @@ class ExcelParserServiceTest {
         File xlsxFile = new File('src/test/resources/rates/PLAIN_HEADER.xlsx')
         File resultFile = new File('src/test/resources/rates/PLAIN_HEADER')
 
-        new ExcelParserService()
+        new ExcelParserServiceT()
                 .parseDocument(xlsxFile, 0, 'PLAIN_HEADER')
                 .with { assertEquals(it, new JsonSlurper().parseText(resultFile.getText())) }
     }
@@ -21,7 +21,7 @@ class ExcelParserServiceTest {
         File xlsxFile = new File('src/test/resources/rates/MIRROR_DIAGONAL.xlsx')
         File resultFile = new File('src/test/resources/rates/MIRROR_DIAGONAL')
 
-        new ExcelParserService()
+        new ExcelParserServiceT()
                 .parseDocument(xlsxFile, 0, 'MIRROR_DIAGONAL')
                 .with { assertEquals(it, new JsonSlurper().parseText(resultFile.getText())) }
     }
