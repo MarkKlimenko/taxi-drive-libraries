@@ -11,7 +11,6 @@ buildscript {
 }
 
 apply plugin: 'scala'
-apply plugin: 'groovy'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven-publish'
 
@@ -26,16 +25,8 @@ test {
     }
 }
 
-sourceSets.main.output.classesDir = new File(buildDir, 'classes/main')
-
-compileScala {
-    classpath = classpath.plus(files(compileGroovy.destinationDir))
-    dependsOn compileGroovy
-}
-
 dependencies {
-    compile 'org.codehaus.groovy:groovy-all:2.3.11',
-            'org.scala-lang:scala-library:2.12.4',
+    compile 'org.scala-lang:scala-library:2.12.4',
 
             'org.apache.poi:poi:3.17',
             'org.apache.poi:poi-ooxml:3.17',
