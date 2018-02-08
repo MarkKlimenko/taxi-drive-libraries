@@ -9,7 +9,7 @@ object CellValueUtil {
   def getCellValue(cell: Cell): String = {
     cell.getCellTypeEnum match {
       case BOOLEAN => cell.getBooleanCellValue.toString
-      case STRING => cell.getRichStringCellValue.getString
+      case STRING => cell.getRichStringCellValue.toString
       case NUMERIC => getNumericValue(cell)
       case FORMULA => getFormulaValue(cell)
       case BLANK => ""
@@ -18,7 +18,7 @@ object CellValueUtil {
 
   def getFormulaValue(cell: Cell): String = {
     cell.getCachedFormulaResultTypeEnum match {
-      case STRING => cell.getRichStringCellValue.getString
+      case STRING => cell.getRichStringCellValue.toString
       case NUMERIC => getNumericValue(cell)
     }
   }
@@ -26,8 +26,7 @@ object CellValueUtil {
   def getNumericValue(cell: Cell): String = {
     if (DateUtil.isCellDateFormatted(cell)) {
       cell.getDateCellValue.toString
-    }
-    else {
+    } else {
       new DecimalFormat("#.####")
         .format(cell.getNumericCellValue)
     }
