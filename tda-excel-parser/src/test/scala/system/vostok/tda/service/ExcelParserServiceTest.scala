@@ -1,28 +1,33 @@
 package system.vostok.tda.service
 
+import java.io.{File, FileInputStream}
 
-class ExcelParserServiceTest {
+import org.json4s._
+import org.json4s.jackson.Serialization.write
+import org.junit.jupiter.api.Assertions._
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
+import scala.io.Source
 
+object ExcelParserServiceTest {
+  implicit val formats = DefaultFormats
 
-    /*@Test
-    void plainHeaderExcelToListTest() {
-        File xlsxFile = new File('src/test/resources/rates/PLAIN_HEADER.xlsx')
-        File resultFile = new File('src/test/resources/rates/PLAIN_HEADER')
+  @ParameterizedTest
+  @ValueSource(strings = Array("PLAIN_HEADER", "MIRROR_DIAGONAL"))
+  def plainHeaderExcelToListTest(parserType: String): Unit = {
+    val xlsxFile: File = new File(s"src/test/resources/rates/$parserType.xlsx")
+    val expectedResultFile: File = new File(s"src/test/resources/rates/$parserType.json")
 
-        new ExcelParserService()
-                .parseDocument(xlsxFile.newInputStream(), 0, 'PLAIN_HEADER')
+    assertEquals(getExpectedJson(expectedResultFile), parseFileToJson(xlsxFile, parserType))
+  }
 
-                //.with { assertEquals(it, new JsonSlurper().parseText(resultFile.getText())) }
-    }
+  def parseFileToJson(xlsxFile: File, xlsxFileType: String): String = write(
+    new ExcelParserService()
+      .parseDocument(new FileInputStream(xlsxFile), 0, xlsxFileType)
+  )
 
-    //@Test
-    void mirrorDiagonalExcelToListTest() {
-        File xlsxFile = new File('src/test/resources/rates/MIRROR_DIAGONAL.xlsx')
-        File resultFile = new File('src/test/resources/rates/MIRROR_DIAGONAL')
-
-        new ExcelParserServiceT()
-                .parseDocument(xlsxFile, 0, 'MIRROR_DIAGONAL')
-                .with { assertEquals(it, new JsonSlurper().parseText(resultFile.getText())) }
-    }*/
+  def getExpectedJson(expectedResultFile: File): String = {
+    Source.fromFile(expectedResultFile).getLines.mkString
+  }
 }
