@@ -13,6 +13,7 @@ object CellValueUtil {
       case NUMERIC => getNumericValue(cell)
       case FORMULA => getFormulaValue(cell)
       case BLANK => ""
+      case _ => null
     }
   }
 
@@ -20,6 +21,7 @@ object CellValueUtil {
     cell.getCachedFormulaResultTypeEnum match {
       case STRING => cell.getRichStringCellValue.toString
       case NUMERIC => getNumericValue(cell)
+      case _ => null
     }
   }
 

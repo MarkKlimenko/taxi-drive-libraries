@@ -2,15 +2,24 @@ package system.vostok.tda.util.parser
 
 import java.io.InputStream
 
-import com.sun.xml.internal.stream.Entity
+import system.vostok.tda.domain.ParsedRow
 import system.vostok.tda.util.constants.ParserType._
 
-import scala.collection.mutable
+/**
+  * Contain output in form
+  * HEADER -> | header | ... | ... |
+  * SIMPLE -> | value  | ... | ... |
+  * SIMPLE -> |  ...   | ... | ... |
+  */
 
-class MirrorDiagonalExcelParser extends SimpleExcelParser {
+class MirrorDiagonalExcelParser extends ExcelParser {
   override val parserType: String = MIRROR_DIAGONAL
 
-  override def parse(file: InputStream, sheetIndex: Integer): mutable.ArrayBuilder[Entity] = ???
+  override def parse(file: InputStream, sheetIndex: Integer): Iterable[ParsedRow] = {
+    new SimpleExcelParser().parse(file, sheetIndex)
+
+  }
+
 
 
   /*static List mirrorDiagonalExcelToList(Object file, Integer sheetIndex) {

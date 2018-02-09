@@ -2,31 +2,32 @@ package system.vostok.tda.util.parser
 
 import java.io.InputStream
 
-import com.sun.xml.internal.stream.Entity
-import org.apache.poi.ss.usermodel.WorkbookFactory
+import org.apache.poi.ss.usermodel.{Row, WorkbookFactory}
+import system.vostok.tda.domain.ParsedRow
 import system.vostok.tda.util.CellValueUtil
 import system.vostok.tda.util.constants.ParserType._
+import system.vostok.tda.util.constants.RowType._
 
 import scala.collection.JavaConverters._
-import scala.collection.mutable
+
+/**
+  * Contain output in form
+  * SIMPLE -> |value| ... | ... |
+  * SIMPLE -> | ... | ... | ... |
+  */
 
 class SimpleExcelParser extends ExcelParser {
   override val parserType: String = PLAIN_HEADER
 
-  override def parse(file: InputStream, sheetIndex: Integer): mutable.ArrayBuilder[Entity] = {
+  override def parse(file: InputStream, sheetIndex: Integer): Iterable[ParsedRow] = {
     WorkbookFactory.create(file)
       .getSheetAt(sheetIndex)
       .asScala
-      .map(_.asScala.map(CellValueUtil.getCellValue(_)))
-      .asInstanceOf[mutable.ArrayBuilder[mutable.ArrayBuilder[String]]]
+      .map(row => composeParsedRow(row))
   }
 
-
-  /*static List plainHeaderExcelToList(Object file, Integer sheetIndex) {
-    WorkbookFactory.create(file)
-      .getSheetAt(sheetIndex)
-      .collect { it.collect(CellValueUtil.&getCellValue) }
-  }
-*/
-
+  def composeParsedRow(row: Row): ParsedRow = new ParsedRow(
+    rowType = SIMPLE,
+    content = row.asScala.map(cell => CellValueUtil.getCellValue(cell))
+  )
 }
