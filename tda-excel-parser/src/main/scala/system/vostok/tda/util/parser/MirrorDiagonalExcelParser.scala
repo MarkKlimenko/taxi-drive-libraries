@@ -7,16 +7,16 @@ import system.vostok.tda.util.constants.ParserType._
 
 /**
   * Contain output in form
-  * HEADER -> | header | ... | ... |
-  * SIMPLE -> | value  | ... | ... |
-  * SIMPLE -> |  ...   | ... | ... |
+  * SIMPLE -> | value | ... | ... |
+  * SIMPLE -> | value | ... | ... |
+  * SIMPLE -> |  ...  | ... | ... |
   */
 
 class MirrorDiagonalExcelParser extends ExcelParser {
   override val parserType: String = MIRROR_DIAGONAL
 
   override def parse(file: InputStream, sheetIndex: Integer): Iterable[ParsedRow] = {
-    new SimpleExcelParser().parse(file, sheetIndex)
+    new SimpleTableExcelParser().parse(file, sheetIndex)
 
   }
 

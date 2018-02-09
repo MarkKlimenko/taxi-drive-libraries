@@ -12,22 +12,24 @@ import scala.collection.JavaConverters._
 
 /**
   * Contain output in form
-  * SIMPLE -> |value| ... | ... |
-  * SIMPLE -> | ... | ... | ... |
+  * HEADER -> | header | ... | ... |
+  * SIMPLE -> | value  | ... | ... |
+  * SIMPLE -> |  ...   | ... | ... |
   */
 
-class SimpleExcelParser extends ExcelParser {
+class PlainHeaderExcelParser extends ExcelParser {
   override val parserType: String = PLAIN_HEADER
 
   override def parse(file: InputStream, sheetIndex: Integer): Iterable[ParsedRow] = {
     WorkbookFactory.create(file)
       .getSheetAt(sheetIndex)
       .asScala
-      .map(row => composeParsedRow(row))
+      .zipWithIndex
+      .map{ case(row, index) => composeParsedRow(row, index)}
   }
 
-  def composeParsedRow(row: Row): ParsedRow = new ParsedRow(
-    rowType = SIMPLE,
+  def composeParsedRow(row: Row, index: Long): ParsedRow = new ParsedRow(
+    rowType = if(index == 0) HEADER else SIMPLE,
     content = row.asScala.map(cell => CellValueUtil.getCellValue(cell))
   )
 }

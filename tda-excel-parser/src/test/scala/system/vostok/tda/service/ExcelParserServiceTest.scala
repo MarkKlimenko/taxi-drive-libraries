@@ -14,7 +14,7 @@ object ExcelParserServiceTest {
   implicit val formats = DefaultFormats
 
   @ParameterizedTest
-  @ValueSource(strings = Array("PLAIN_HEADER", "MIRROR_DIAGONAL"))
+  @ValueSource(strings = Array("SIMPLE_TABLE", "PLAIN_HEADER", "MIRROR_DIAGONAL"))
   def plainHeaderExcelToListTest(parserType: String): Unit = {
     val xlsxFile: File = new File(s"src/test/resources/rates/$parserType.xlsx")
     val expectedResultFile: File = new File(s"src/test/resources/rates/$parserType.json")
