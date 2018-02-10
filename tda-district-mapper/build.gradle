@@ -10,8 +10,7 @@ buildscript {
     }
 }
 
-apply plugin: 'groovy'
-apply plugin: 'java'
+apply plugin: 'scala'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven-publish'
 
@@ -27,10 +26,9 @@ test {
 }
 
 dependencies {
-    compile 'org.codehaus.groovy:groovy-all:2.3.11'
+    compile 'org.scala-lang:scala-library:2.12.4'
 
-    testCompile 'org.springframework.boot:spring-boot-starter-test:1.5.8.RELEASE',
-            'org.testng:testng:6.11'
+    testCompile 'org.testng:testng:6.11'
 }
 
 bintray {
