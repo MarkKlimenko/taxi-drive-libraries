@@ -14,18 +14,12 @@ class AddressAccuracyCheckerTest extends FunSuite {
     )
 
     addressCheckerParam.foreach { address =>
-      print(address("streetId"))
       AccuracyChecker.checkAddressConsistence(address) should equal(true)
     }
   }
 
   test("IllegalBuildingFormatException should be thrown") {
     val illegalBuildingFormatExceptionAddress = List(
-      Map("building" -> "3"),
-      Map("streetId" -> "svt"),
-      Map("streetId" -> "", "building" -> "3"),
-      Map("streetId" -> "svt v", "building" -> "3"),
-      Map("streetId" -> "svt", "building" -> ""),
       Map("streetId" -> "svt", "building" -> "3АА"),
       Map("streetId" -> "svt", "building" -> "3F"),
       Map("streetId" -> "svt", "building" -> "3/01"),
@@ -48,14 +42,7 @@ class AddressAccuracyCheckerTest extends FunSuite {
       Map("streetId" -> "svt"),
       Map("streetId" -> "", "building" -> "3"),
       Map("streetId" -> "svt v", "building" -> "3"),
-      Map("streetId" -> "svt", "building" -> ""),
-      Map("streetId" -> "svt", "building" -> "3АА"),
-      Map("streetId" -> "svt", "building" -> "3F"),
-      Map("streetId" -> "svt", "building" -> "3/01"),
-      Map("streetId" -> "svt", "building" -> "3/А"),
-      Map("streetId" -> "svt", "building" -> "3//1"),
-      Map("streetId" -> "svt", "building" -> "3/1А"),
-      Map("streetId" -> "svt", "building" -> "test")
+      Map("streetId" -> "svt", "building" -> "")
     )
 
     illegalEntityIdFormatExceptionAddress.foreach { address =>
