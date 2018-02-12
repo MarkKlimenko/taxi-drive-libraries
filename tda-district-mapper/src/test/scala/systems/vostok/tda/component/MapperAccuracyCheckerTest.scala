@@ -3,7 +3,7 @@ package systems.vostok.tda.component
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 import systems.vostok.tda.domain.{Address, Mapper}
-import systems.vostok.tda.exception.{IllegalBuildingFormatException, IllegalEntityIdFormatException, NotCompatibleMapperException}
+import systems.vostok.tda.exception.{IllegalBuildingFormatException, IllegalEntityIdFormatException, NoMapperDataException, NotCompatibleMapperException}
 
 class MapperAccuracyCheckerTest extends FunSuite {
 
@@ -21,7 +21,7 @@ class MapperAccuracyCheckerTest extends FunSuite {
   test("Mapper NoMapperDataException exception") {
     val mapperNoMapperData = List()
 
-    an[IllegalBuildingFormatException] should be thrownBy {
+    an[NoMapperDataException] should be thrownBy {
       AccuracyChecker.checkMapperConsistence(mapperNoMapperData)
     }
   }
