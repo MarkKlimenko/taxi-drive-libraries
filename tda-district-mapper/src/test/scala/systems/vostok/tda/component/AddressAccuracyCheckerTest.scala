@@ -2,15 +2,16 @@ package systems.vostok.tda.component
 
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
+import systems.vostok.tda.domain.Address
 import systems.vostok.tda.exception.{IllegalBuildingFormatException, IllegalEntityIdFormatException}
 
 class AddressAccuracyCheckerTest extends FunSuite {
 
   test("Address have proper format") {
     val addressCheckerParam = List(
-      Map("streetId" -> "svt", "building" -> "3"),
-      Map("streetId" -> "svt", "building" -> "3А"),
-      Map("streetId" -> "svt", "building" -> "3/1")
+      Address("svt", "3"),
+      Address("svt", "3А"),
+      Address("svt", "3/1")
     )
 
     addressCheckerParam.foreach { address =>
@@ -20,13 +21,13 @@ class AddressAccuracyCheckerTest extends FunSuite {
 
   test("IllegalBuildingFormatException should be thrown") {
     val illegalBuildingFormatExceptionAddress = List(
-      Map("streetId" -> "svt", "building" -> "3АА"),
-      Map("streetId" -> "svt", "building" -> "3F"),
-      Map("streetId" -> "svt", "building" -> "3/01"),
-      Map("streetId" -> "svt", "building" -> "3/А"),
-      Map("streetId" -> "svt", "building" -> "3//1"),
-      Map("streetId" -> "svt", "building" -> "3/1А"),
-      Map("streetId" -> "svt", "building" -> "test")
+      Address("svt", "3АА"),
+      Address("svt", "3F"),
+      Address("svt", "3/01"),
+      Address("svt", "3/А"),
+      Address("svt", "3//1"),
+      Address("svt", "3/1А"),
+      Address("svt", "test")
     )
 
     illegalBuildingFormatExceptionAddress.foreach { address =>
@@ -38,11 +39,11 @@ class AddressAccuracyCheckerTest extends FunSuite {
 
   test("IllegalEntityIdFormatException should be thrown") {
     val illegalEntityIdFormatExceptionAddress = List(
-      Map("building" -> "3"),
-      Map("streetId" -> "svt"),
-      Map("streetId" -> "", "building" -> "3"),
-      Map("streetId" -> "svt v", "building" -> "3"),
-      Map("streetId" -> "svt", "building" -> "")
+      Address(null, "3"),
+      Address("svt", null),
+      Address("", "3"),
+      Address("svt v", "3"),
+      Address("svt", "")
     )
 
     illegalEntityIdFormatExceptionAddress.foreach { address =>

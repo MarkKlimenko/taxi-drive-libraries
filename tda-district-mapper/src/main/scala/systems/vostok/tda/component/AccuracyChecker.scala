@@ -1,5 +1,6 @@
 package systems.vostok.tda.component
 
+import systems.vostok.tda.domain.{Address, Mapper}
 import systems.vostok.tda.exception._
 
 object AccuracyChecker {
@@ -7,48 +8,48 @@ object AccuracyChecker {
   //TODO: get rid of maps - add objects
   //TODO: refactor
 
-  def checkAddressConsistence(address: Map[String, String]): Boolean = {
-    checkEntityId(address.get("streetId"))
-    checkEntityId(address.get("building"))
-    checkBuilding(address.get("building"))
+  def checkAddressConsistence(address: Address): Boolean = {
+    checkEntityId(address.streetId)
+    checkEntityId(address.building)
+    checkBuilding(address.building)
   }
 
-  def checkMapperConsistence(mapper: List[Map[String, String]]): Boolean = {
+  def checkMapperConsistence(mapper: List[Mapper]): Boolean = {
     if (mapper.isEmpty) {
       throw new NoMapperDataException()
     }
 
     mapper.foreach { mapperLine =>
-      checkEntityId(mapperLine.get("streetId"))
-      checkEntityId(mapperLine.get("districtId"))
+      checkEntityId(mapperLine.streetId)
+      checkEntityId(mapperLine.districtId)
 
-      if (mapperLine("building") != "") {
-        checkBuilding(Option(mapperLine("building").split('-')(0)))
-        checkBuilding(Option(mapperLine("building").split('-')(1)))
+      if (mapperLine.building != "") {
+        checkBuilding(mapperLine.building.split('-')(0))
+        checkBuilding(mapperLine.building.split('-')(1))
       }
     }
     true
   }
 
-  def checkAddressMapperCompatibility(address: Map[String, String], mapper: List[Map[String, String]]): Boolean = {
+  def checkAddressMapperCompatibility(address: Address, mapper: List[Mapper]): Boolean = {
     mapper.foreach { mapperLine =>
-      if (address("streetId") != mapperLine("streetId")) {
-        throw new NotCompatibleMapperException(address("streetId"), mapperLine("streetId"))
+      if (address.streetId != mapperLine.streetId) {
+        throw new NotCompatibleMapperException(address.streetId, mapperLine.streetId)
       }
     }
     true
   }
 
-  protected def checkEntityId(id: Option[String]): Boolean = {
-    if (id.isEmpty || id.get == "" || id.get.contains(" ")) {
-      throw new IllegalEntityIdFormatException(id = id.toString)
+  protected def checkEntityId(id: String): Boolean = {
+    if (id == null || id == "" || id.contains(" ")) {
+      throw new IllegalEntityIdFormatException(id = id)
     }
     true
   }
 
-  protected def checkBuilding(building: Option[String]): Boolean = {
-    if (!(building.isEmpty || building.get == "" || building.get.contains(" "))) {
-      val buildingUp = building.get.toUpperCase
+  protected def checkBuilding(building: String): Boolean = {
+    if (!(building == null || building == "" || building.contains(" "))) {
+      val buildingUp = building.toUpperCase
 
       if (buildingUp forall Character.isDigit) {
         return true
@@ -64,6 +65,6 @@ object AccuracyChecker {
         return true
       }
     }
-    throw new IllegalBuildingFormatException(building = building.get)
+    throw new IllegalBuildingFormatException(building = building)
   }
 }

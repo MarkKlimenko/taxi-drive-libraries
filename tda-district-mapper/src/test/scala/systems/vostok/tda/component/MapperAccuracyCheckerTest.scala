@@ -2,15 +2,16 @@ package systems.vostok.tda.component
 
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
+import systems.vostok.tda.domain.{Address, Mapper}
 import systems.vostok.tda.exception.{IllegalBuildingFormatException, IllegalEntityIdFormatException, NotCompatibleMapperException}
 
 class MapperAccuracyCheckerTest extends FunSuite {
 
   val mapperData = List(
-    Map("streetId" -> "test", "building" -> "", "districtId" -> "test"),
-    Map("streetId" -> "test", "building" -> "1-1/6", "districtId" -> "test"),
-    Map("streetId" -> "test", "building" -> "1/6-24А", "districtId" -> "test"),
-    Map("streetId" -> "test", "building" -> "24Б-50", "districtId" -> "test")
+    Mapper("test", "", "test"),
+    Mapper("test", "1-1/6", "test"),
+    Mapper("test", "1/6-24А", "test"),
+    Mapper("test", "24Б-50", "test")
   )
 
   test("Mapper have proper format") {
@@ -26,7 +27,7 @@ class MapperAccuracyCheckerTest extends FunSuite {
   }
 
   test("Mapper IllegalBuildingFormatException exception") {
-    val mapperIllegalBuilding = List(Map("streetId" -> "test", "building" -> " ", "districtId" -> "test"))
+    val mapperIllegalBuilding = List(Mapper("test", " ", "test"))
 
     an[IllegalBuildingFormatException] should be thrownBy {
       AccuracyChecker.checkMapperConsistence(mapperIllegalBuilding)
@@ -35,8 +36,8 @@ class MapperAccuracyCheckerTest extends FunSuite {
 
   test("Mapper IllegalEntityIdFormatException exception") {
     val mapperIllegalEntityIdFormat = List(
-      List(Map("streetId" -> " ", "building" -> "1-1/6", "districtId" -> "test")),
-      List(Map("streetId" -> "test", "building" -> "1-1/6", "districtId" -> " "))
+      List(Mapper(" ", "1-1/6", "test")),
+      List(Mapper("test", "1-1/6", " "))
     )
 
     mapperIllegalEntityIdFormat.foreach { mapper =>
@@ -47,13 +48,13 @@ class MapperAccuracyCheckerTest extends FunSuite {
   }
 
   test("Mapper compatibility test") {
-    val properAddress = Map("streetId" -> "test", "building" -> "3")
+    val properAddress = Address("test", "3")
 
     AccuracyChecker.checkAddressMapperCompatibility(properAddress, mapperData) should equal(true)
   }
 
   test("Mapper NotCompatibleMapperException exception") {
-    val wrongAddress = Map("streetId" -> "test_another_id", "building" -> "3")
+    val wrongAddress = Address("test_another_id", "3")
 
     an[NotCompatibleMapperException] should be thrownBy {
       AccuracyChecker.checkAddressMapperCompatibility(wrongAddress, mapperData)
