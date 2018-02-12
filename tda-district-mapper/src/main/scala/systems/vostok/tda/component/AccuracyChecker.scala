@@ -5,7 +5,6 @@ import systems.vostok.tda.exception._
 
 object AccuracyChecker {
 
-  //TODO: get rid of maps - add objects
   //TODO: refactor
 
   def checkAddressConsistence(address: Address): Boolean = {

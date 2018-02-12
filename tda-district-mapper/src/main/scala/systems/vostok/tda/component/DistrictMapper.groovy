@@ -3,15 +3,15 @@ package systems.vostok.tda.component
 import systems.vostok.tda.exception.NoTargetDistrictException
 import systems.vostok.tda.util.constants.BuildingType
 
-import static systems.vostok.tda.component.AddressTranslator.translateSingleMapperToSimple
+/*import static systems.vostok.tda.component.AddressTranslator.translateSingleMapperToSimple
 import static systems.vostok.tda.util.DataHelper.extractFirstDigits
 import static systems.vostok.tda.util.DataHelper.extractLetterLiteral
-import static systems.vostok.tda.util.DataHelper.extractNumericLiteral
+import static systems.vostok.tda.util.DataHelper.extractNumericLiteral*/
 import static systems.vostok.tda.util.constants.BuildingType.*
 
 class DistrictMapper {
 
-    static String mapAddressToDistrict(List adoptedMapperData, String building, BuildingType buildingType) {
+   /* static String mapAddressToDistrict(List adoptedMapperData, String building, BuildingType buildingType) {
         if(adoptedMapperData.first().building == '') {
             adoptedMapperData.first().districtId
         } else {
@@ -25,7 +25,7 @@ class DistrictMapper {
         }
     }
 
-    protected static Boolean checkAccordance(Map mapperData, String building, BuildingType buildingType) {
+    *//*protected static Boolean checkAccordance(Map mapperData, String building, BuildingType buildingType) {
         switch (buildingType) {
             case SIMPLE:
                 return checkSimpleAccordance(mapperData, building)
@@ -34,7 +34,7 @@ class DistrictMapper {
             case FRACTION:
                 return checkFractionAccordance(mapperData, building)
         }
-    }
+    }*//*
 
     protected static Boolean checkSimpleAccordance(Map mapperData, String building) {
         ((building as Integer) <= (mapperData.buildingTo as Integer)) &&
@@ -115,5 +115,5 @@ class DistrictMapper {
         }
 
         [(numFrom as Integer)..(numTo as Integer)].flatten().contains(numBuilding as Integer)
-    }
+    }*/
 }
