@@ -1,47 +1,45 @@
 package systems.vostok.tda.util
 
+import org.scalatest.FunSuite
+import org.scalatest.Matchers._
 
-object DataHelperTest {
+class DataHelperTest extends FunSuite {
 
-    /*@DataProvider(name = 'extract_first_digits')
-    Object[][] extractFirstDigitsParam() {
-        [['15', '15'],
-         ['15/3', '15'],
-         ['15/23', '15'],
-         ['1543/23', '1543'],
-         ['15А', '15']]
+  test("Extract first digit test") {
+    val params = List(
+      List("15", "15"),
+      List("15/3", "15"),
+      List("15/23", "15"),
+      List("1543/23", "1543"),
+      List("15А", "15")
+    )
+
+    params.foreach { param =>
+      DataHelper.extractFirstDigits(param.head) should equal(param.last)
     }
+  }
 
-    @Test(dataProvider = 'extract_first_digits')
-    void extractFirstDigitsTest(String building, String result) {
-        DataHelper.extractFirstDigits(building)
-                .with { assertEquals(it, result) }
+  test("Extract letter literal test") {
+    val params = List(
+      List("15", null),
+      List("15А", "А"),
+      List("15/23", null)
+    )
+
+    params.foreach { param =>
+      DataHelper.extractLetterLiteral(param.head) should equal(param.last)
     }
+  }
 
+  test("Extract numeric literal test") {
+    val params = List(
+      List("15", null),
+      List("15А", null),
+      List("15/23", "23")
+    )
 
-    @DataProvider(name = 'extract_letter_literal')
-    Object[][] extractLetterLiteralParam() {
-        [['15', null],
-         ['15А', 'А'],
-         ['15/23', null]]
+    params.foreach { param =>
+      DataHelper.extractNumericLiteral(param.head) should equal(param.last)
     }
-
-    @Test(dataProvider = 'extract_letter_literal')
-    void extractLetterLiteralTest(String building, String result) {
-        DataHelper.extractLetterLiteral(building)
-                .with { assertEquals(it, result) }
-    }
-
-    @DataProvider(name = 'extract_numeric_literal')
-    Object[][] extractNumericLiteralParam() {
-        [['15', null],
-         ['15А', null],
-         ['15/23', '23']]
-    }
-
-    @Test(dataProvider = 'extract_numeric_literal')
-    void extractNumericLiteralTest(String building, String result) {
-        DataHelper.extractNumericLiteral(building)
-                .with { assertEquals(it, result) }
-    }*/
+  }
 }

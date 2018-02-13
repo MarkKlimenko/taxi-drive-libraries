@@ -8,10 +8,10 @@ import systems.vostok.tda.exception.{IllegalBuildingFormatException, IllegalEnti
 class MapperAccuracyCheckerTest extends FunSuite {
 
   val mapperData = List(
-    Mapper("test", "", "test"),
-    Mapper("test", "1-1/6", "test"),
-    Mapper("test", "1/6-24А", "test"),
-    Mapper("test", "24Б-50", "test")
+    new Mapper("test", "", "test"),
+    new Mapper("test", "1-1/6", "test"),
+    new Mapper("test", "1/6-24А", "test"),
+    new Mapper("test", "24Б-50", "test")
   )
 
   test("Mapper have proper format") {
@@ -27,7 +27,7 @@ class MapperAccuracyCheckerTest extends FunSuite {
   }
 
   test("Mapper IllegalBuildingFormatException exception") {
-    val mapperIllegalBuilding = List(Mapper("test", " ", "test"))
+    val mapperIllegalBuilding = List(new Mapper("test", " ", "test"))
 
     an[IllegalBuildingFormatException] should be thrownBy {
       AccuracyChecker.checkMapperConsistence(mapperIllegalBuilding)
@@ -36,8 +36,8 @@ class MapperAccuracyCheckerTest extends FunSuite {
 
   test("Mapper IllegalEntityIdFormatException exception") {
     val mapperIllegalEntityIdFormat = List(
-      List(Mapper(" ", "1-1/6", "test")),
-      List(Mapper("test", "1-1/6", " "))
+      List(new Mapper(" ", "1-1/6", "test")),
+      List(new Mapper("test", "1-1/6", " "))
     )
 
     mapperIllegalEntityIdFormat.foreach { mapper =>

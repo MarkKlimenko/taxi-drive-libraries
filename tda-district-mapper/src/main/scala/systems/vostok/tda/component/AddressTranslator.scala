@@ -2,6 +2,7 @@ package systems.vostok.tda.component
 
 import systems.vostok.tda.domain.Mapper
 import systems.vostok.tda.exception.IllegalBuildingFormatException
+import systems.vostok.tda.util.DataHelper._
 import systems.vostok.tda.util.constants.BuildingType._
 
 object AddressTranslator {
@@ -20,67 +21,63 @@ object AddressTranslator {
     }
   }
 
-  /*def translateMapper(mappingData: List[Mapper], buildingType: BuildingType): List[Mapper] = {
-   /* buildingType match {
-      //case SIMPLE => translateDataForSimple(mappingData)
-      //case _ => translateDataForComplex(mappingData, buildingType)
-    }*/
-  }*/
-
-  /*def translateSingleMapperToSimple(singleMapper: Mapper): Mapper = {
-    val result = singleMapper//.clone()
-
-    result.buildingFrom = extractFirstDigits(singleMapper.buildingFrom)
-    result.buildingTo = extractFirstDigits(singleMapper.buildingTo)
-  }*/
-
-  /*
-
-  static Map translateSingleMapperToSimple(Map singleMapper) {
-      Map result = singleMapper.clone() as Map
-
-      result << [ buildingFrom: extractFirstDigits(singleMapper.buildingFrom),
-                  buildingTo: extractFirstDigits(singleMapper.buildingTo) ]
+  def translateMapper(mappingData: List[Mapper], buildingType: BuildingType): List[Mapper] = {
+    buildingType match {
+      case SIMPLE => translateDataForSimple(mappingData)
+      case _ => translateDataForComplex(mappingData, buildingType)
+    }
   }
 
-  protected static List translateDataForSimple(List mappingData) {
-      cloneMapping(mappingData).collect {
-          if(it.building == '') {
-              it
-          } else {
-              String rawBuildingsFrom = it.building.split('-')[0]
-
-              if ([FRACTION, LITERAL].contains(getBuildingType(rawBuildingsFrom))) {
-                  it << [buildingFrom: ((extractFirstDigits(rawBuildingsFrom) as Integer) + 1) as String]
-              } else {
-                  it << [buildingFrom: extractFirstDigits(rawBuildingsFrom)]
-              }
-
-              it << [buildingTo: extractFirstDigits(it.building.split('-')[1] as String)]
-          }
-      }
+  def translateSingleMapperToSimple(singleMapper: Mapper): Mapper = {
+    new Mapper(
+      streetId = singleMapper.streetId,
+      building = singleMapper.building,
+      buildingFrom = extractFirstDigits(singleMapper.buildingFrom),
+      buildingTo = extractFirstDigits(singleMapper.buildingFrom),
+      districtId = singleMapper.districtId
+    )
   }
 
-  protected static List translateDataForComplex(List mappingData, BuildingType buildingType) {
-      cloneMapping(mappingData).collect {
-          if(it.building == '') {
-              it
-          } else {
-              String rawBuildingsFrom = it.building.split('-')[0]
-              String rawBuildingsTo = it.building.split('-')[1]
+  protected def translateDataForSimple(mappingData: List[Mapper]): List[Mapper] = {
+    mappingData.map { mapper =>
+      if (mapper.building == "") {
+        mapper
+      } else {
+        val rawBuildingsFrom = mapper.building.split("-").head
+        if (List(FRACTION, LITERAL).contains(getBuildingType(rawBuildingsFrom))) {
+          mapper.buildingFrom = (extractFirstDigits(rawBuildingsFrom).toInt + 1).toString
+        } else {
+          mapper.buildingFrom = extractFirstDigits(rawBuildingsFrom)
+        }
+        mapper.buildingTo = extractFirstDigits(mapper.building.split("-").last)
 
-              if ([buildingType, SIMPLE].contains(getBuildingType(rawBuildingsFrom))) {
-                  it << [buildingFrom: rawBuildingsFrom as String]
-              } else {
-                  it << [buildingFrom: ((extractFirstDigits(rawBuildingsFrom) as Integer) + 1) as String]
-              }
-
-              if ([buildingType, SIMPLE].contains(getBuildingType(rawBuildingsTo))) {
-                  it << [buildingTo: rawBuildingsTo as String]
-              } else {
-                  it << [buildingTo: extractFirstDigits(rawBuildingsTo)]
-              }
-          }
+        mapper
       }
-  }*/
+    }
+  }
+
+  def translateDataForComplex(mappingData: List[Mapper], buildingType: BuildingType): List[Mapper] = {
+    mappingData.map { mapper =>
+      if (mapper.building == "") {
+        mapper
+      } else {
+        val rawBuildingsFrom = mapper.building.split('-').head
+        val rawBuildingsTo = mapper.building.split('-').last
+
+        if (List(buildingType, SIMPLE).contains(getBuildingType(rawBuildingsFrom))) {
+          mapper.buildingFrom = rawBuildingsFrom
+        } else {
+          mapper.buildingFrom = (extractFirstDigits(rawBuildingsFrom).toInt + 1).toString
+        }
+
+        if (List(buildingType, SIMPLE).contains(getBuildingType(rawBuildingsTo))) {
+          mapper.buildingTo = rawBuildingsTo
+        } else {
+          mapper.buildingTo = extractFirstDigits(rawBuildingsTo)
+        }
+
+        mapper
+      }
+    }
+  }
 }
