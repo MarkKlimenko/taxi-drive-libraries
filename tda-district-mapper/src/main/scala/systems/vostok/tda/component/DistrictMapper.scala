@@ -6,7 +6,7 @@ import systems.vostok.tda.exception.NoTargetDistrictException
 import systems.vostok.tda.util.DataHelper._
 import systems.vostok.tda.util.constants.BuildingType._
 
-class DistrictMapper {
+object DistrictMapper {
 
   def mapAddressToDistrict(adoptedMapperData: List[Mapper], building: String, buildingType: BuildingType): String = {
     if (adoptedMapperData.head.building == "") {
@@ -69,43 +69,38 @@ class DistrictMapper {
     (reassignedLetFrom.head to letTo.head).contains(letBuilding)
   }
 
+  protected def checkFractionAccordance(mapper: Mapper, building: String): Boolean = {
+    val litFreeBuilding = extractFirstDigits(building)
+    val litFreeBuildingFrom = extractFirstDigits(mapper.buildingFrom)
+    val litFreeBuildingTo = extractFirstDigits(mapper.buildingTo)
 
-  /*
-   protected static Boolean checkFractionAccordance(Map mapperData, String building) {
-       String litFreeBuilding = extractFirstDigits(building)
-       String litFreeBuildingFrom = extractFirstDigits(mapperData.buildingFrom)
-       String litFreeBuildingTo = extractFirstDigits(mapperData.buildingTo)
+    if (litFreeBuilding != litFreeBuildingFrom && litFreeBuilding != litFreeBuildingTo) {
+      checkSimpleAccordance(translateSingleMapperToSimple(mapper), litFreeBuilding)
 
-       if (litFreeBuilding != litFreeBuildingFrom && litFreeBuilding != litFreeBuildingTo) {
-           return checkSimpleAccordance(translateSingleMapperToSimple(mapperData), litFreeBuilding)
+    } else if (litFreeBuilding == litFreeBuildingFrom && litFreeBuilding != litFreeBuildingTo) {
+      compareNumbers(extractNumericLiteral(mapper.buildingFrom), "9999", extractNumericLiteral(building))
 
-       } else if (litFreeBuilding == litFreeBuildingFrom && litFreeBuilding != litFreeBuildingTo) {
-           return compareNumbers(extractNumericLiteral(mapperData.buildingFrom),
-                   '9999',
-                   extractNumericLiteral(building))
+    } else if (litFreeBuilding != litFreeBuildingFrom && litFreeBuilding == litFreeBuildingTo) {
+      compareNumbers("0", extractNumericLiteral(mapper.buildingTo), extractNumericLiteral(building))
 
-       } else if (litFreeBuilding != litFreeBuildingFrom && litFreeBuilding == litFreeBuildingTo) {
-           return compareNumbers('0',
-                   extractNumericLiteral(mapperData.buildingTo),
-                   extractNumericLiteral(building))
+    } else if (litFreeBuilding == litFreeBuildingFrom && litFreeBuilding == litFreeBuildingTo) {
+      compareNumbers(extractNumericLiteral(mapper.buildingFrom), extractNumericLiteral(mapper.buildingTo), extractNumericLiteral(building))
 
-       } else if (litFreeBuilding == litFreeBuildingFrom && litFreeBuilding == litFreeBuildingTo) {
-           return compareNumbers(extractNumericLiteral(mapperData.buildingFrom),
-                   extractNumericLiteral(mapperData.buildingTo),
-                   extractNumericLiteral(building))
+    } else {
+      false
+    }
+  }
 
-       }
-       false
-   }
+  protected def compareNumbers(numFrom: String, numTo: String, numBuilding: String): Boolean = {
+    var reassignedNumFrom = numFrom
 
-   protected static Boolean compareNumbers(String numFrom, String numTo, String numBuilding) {
-       if (!numFrom) {
-           numFrom = 0
-       }
-       if (!numTo) {
-           return false
-       }
+    if (numFrom == null) {
+      reassignedNumFrom = "0"
+    }
+    if (numTo == null) {
+      return false
+    }
 
-       [(numFrom as Integer)..(numTo as Integer)].flatten().contains(numBuilding as Integer)
-   }*/
+    (numFrom.toInt to numTo.toInt).contains(numBuilding.toInt)
+  }
 }
