@@ -1,6 +1,6 @@
 package systems.vostok.tda.util
 
-import system.vostok.tda.domain.ParsedRow
+import systems.vostok.tda.domain.ParsedRow
 import systems.vostok.tda.domain.ParsedRow
 
 class IterableUtil(val iterable: Iterable[ParsedRow]) {

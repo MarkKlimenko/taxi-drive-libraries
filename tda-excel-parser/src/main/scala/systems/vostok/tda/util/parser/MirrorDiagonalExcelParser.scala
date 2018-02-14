@@ -2,7 +2,6 @@ package systems.vostok.tda.util.parser
 
 import java.io.InputStream
 
-import system.vostok.tda.util.IterableUtil
 import systems.vostok.tda.domain.ParsedRow
 import systems.vostok.tda.util.IterableUtil
 import systems.vostok.tda.util.constants.ParserType._

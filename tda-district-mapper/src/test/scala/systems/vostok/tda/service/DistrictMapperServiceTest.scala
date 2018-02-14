@@ -1,9 +1,12 @@
 package systems.vostok.tda.service
 
+import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
+import org.scalatest.junit.JUnitRunner
 import systems.vostok.tda.domain.{Address, Mapper}
 
+@RunWith(classOf[JUnitRunner])
 class DistrictMapperServiceTest extends FunSuite {
 
   val mapperEmpty = List(
@@ -44,7 +47,7 @@ class DistrictMapperServiceTest extends FunSuite {
   val testData = List(
     List(new Address("svt", "24"), mapperEmpty, "cnt"),
 
-    List(new Address("svt", "25"), mapperSimple, "dal"),
+    List(new Address("svt", "25"), mapperSimple, "erte"),
     List(new Address("svt", "3"), mapperSimple, "cnt"),
     List(new Address("svt", "3"), mapperLiteral, "cnt"),
     List(new Address("svt", "24"), mapperLiteral, "cnt"),

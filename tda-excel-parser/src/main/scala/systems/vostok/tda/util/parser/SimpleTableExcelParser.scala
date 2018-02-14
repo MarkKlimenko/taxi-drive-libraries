@@ -3,7 +3,7 @@ package systems.vostok.tda.util.parser
 import java.io.InputStream
 
 import org.apache.poi.ss.usermodel.{Row, WorkbookFactory}
-import system.vostok.tda.util.CellValueUtil
+import systems.vostok.tda.util.CellValueUtil
 import systems.vostok.tda.domain.ParsedRow
 import systems.vostok.tda.util.CellValueUtil
 import systems.vostok.tda.util.constants.ParserType._

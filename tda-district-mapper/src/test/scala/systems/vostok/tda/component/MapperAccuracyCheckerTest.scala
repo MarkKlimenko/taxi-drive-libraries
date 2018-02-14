@@ -1,10 +1,13 @@
 package systems.vostok.tda.component
 
+import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
+import org.scalatest.junit.JUnitRunner
 import systems.vostok.tda.domain.{Address, Mapper}
 import systems.vostok.tda.exception.{IllegalBuildingFormatException, IllegalEntityIdFormatException, NoMapperDataException, NotCompatibleMapperException}
 
+@RunWith(classOf[JUnitRunner])
 class MapperAccuracyCheckerTest extends FunSuite {
 
   val mapperData = List(

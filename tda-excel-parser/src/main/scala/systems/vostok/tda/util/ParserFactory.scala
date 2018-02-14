@@ -1,6 +1,6 @@
 package systems.vostok.tda.util
 
-import system.vostok.tda.util.parser.{MirrorDiagonalExcelParser, PlainHeaderExcelParser, SimpleTableExcelParser}
+import systems.vostok.tda.util.parser.{MirrorDiagonalExcelParser, PlainHeaderExcelParser, SimpleTableExcelParser}
 import systems.vostok.tda.util.constants.ParserType._
 import systems.vostok.tda.util.parser.{ExcelParser, MirrorDiagonalExcelParser, PlainHeaderExcelParser, SimpleTableExcelParser}
 
