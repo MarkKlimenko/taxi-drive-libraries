@@ -9,9 +9,9 @@ class AddressAccuracyCheckerTest extends FunSuite {
 
   test("Address have proper format") {
     val addressCheckerParam = List(
-      Address("svt", "3"),
-      Address("svt", "3А"),
-      Address("svt", "3/1")
+      new Address("svt", "3"),
+      new Address("svt", "3А"),
+      new Address("svt", "3/1")
     )
 
     addressCheckerParam.foreach { address =>
@@ -21,13 +21,13 @@ class AddressAccuracyCheckerTest extends FunSuite {
 
   test("IllegalBuildingFormatException should be thrown") {
     val illegalBuildingFormatExceptionAddress = List(
-      Address("svt", "3АА"),
-      Address("svt", "3F"),
-      Address("svt", "3/01"),
-      Address("svt", "3/А"),
-      Address("svt", "3//1"),
-      Address("svt", "3/1А"),
-      Address("svt", "test")
+      new Address("svt", "3АА"),
+      new Address("svt", "3F"),
+      new Address("svt", "3/01"),
+      new Address("svt", "3/А"),
+      new Address("svt", "3//1"),
+      new Address("svt", "3/1А"),
+      new Address("svt", "test")
     )
 
     illegalBuildingFormatExceptionAddress.foreach { address =>
@@ -39,11 +39,11 @@ class AddressAccuracyCheckerTest extends FunSuite {
 
   test("IllegalEntityIdFormatException should be thrown") {
     val illegalEntityIdFormatExceptionAddress = List(
-      Address(null, "3"),
-      Address("svt", null),
-      Address("", "3"),
-      Address("svt v", "3"),
-      Address("svt", "")
+      new Address(null, "3"),
+      new Address("svt", null),
+      new Address("", "3"),
+      new Address("svt v", "3"),
+      new Address("svt", "")
     )
 
     illegalEntityIdFormatExceptionAddress.foreach { address =>

@@ -10,7 +10,7 @@ object AddressTranslator {
   def getBuildingType(building: String): BuildingType = {
     val buildingUp = building.toUpperCase()
 
-    if (buildingUp forall Character.isDigit) {
+    if (buildingUp.matches("[0-9]*")) {
       SIMPLE
     } else if (buildingUp.contains("/")) {
       FRACTION
@@ -33,7 +33,7 @@ object AddressTranslator {
       streetId = singleMapper.streetId,
       building = singleMapper.building,
       buildingFrom = extractFirstDigits(singleMapper.buildingFrom),
-      buildingTo = extractFirstDigits(singleMapper.buildingFrom),
+      buildingTo = extractFirstDigits(singleMapper.buildingTo),
       districtId = singleMapper.districtId
     )
   }

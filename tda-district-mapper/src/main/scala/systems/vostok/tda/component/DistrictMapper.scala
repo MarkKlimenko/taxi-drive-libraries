@@ -15,7 +15,7 @@ object DistrictMapper {
       def mapperOption = adoptedMapperData.find(checkAccordance(_, building, buildingType))
 
       mapperOption match {
-        case Some(mapper) => mapper.districtId
+        case Some(mapperOption) => mapperOption.districtId
         case _ => throw new NoTargetDistrictException()
       }
     }
@@ -66,7 +66,7 @@ object DistrictMapper {
       return false
     }
 
-    (reassignedLetFrom.head to letTo.head).contains(letBuilding)
+    (reassignedLetFrom.head to letTo.head).contains(letBuilding.head)
   }
 
   protected def checkFractionAccordance(mapper: Mapper, building: String): Boolean = {
@@ -101,6 +101,6 @@ object DistrictMapper {
       return false
     }
 
-    (numFrom.toInt to numTo.toInt).contains(numBuilding.toInt)
+    (reassignedNumFrom.toInt to numTo.toInt).contains(numBuilding.toInt)
   }
 }

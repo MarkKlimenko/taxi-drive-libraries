@@ -48,13 +48,13 @@ class MapperAccuracyCheckerTest extends FunSuite {
   }
 
   test("Mapper compatibility test") {
-    val properAddress = Address("test", "3")
+    val properAddress = new Address("test", "3")
 
     AccuracyChecker.checkAddressMapperCompatibility(properAddress, mapperData) should equal(true)
   }
 
   test("Mapper NotCompatibleMapperException exception") {
-    val wrongAddress = Address("test_another_id", "3")
+    val wrongAddress = new Address("test_another_id", "3")
 
     an[NotCompatibleMapperException] should be thrownBy {
       AccuracyChecker.checkAddressMapperCompatibility(wrongAddress, mapperData)

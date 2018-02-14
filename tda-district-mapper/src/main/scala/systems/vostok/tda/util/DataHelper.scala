@@ -7,8 +7,8 @@ object DataHelper {
   }
 
   def extractLetterLiteral(data: String): String = {
-    if (data.matches(".*[А - Я]")) {
-      return "[А - Я]+".r.findFirstMatchIn(data).get.toString
+    if (data.matches(".*[А-Я]")) {
+      return "[А-Я]+".r.findFirstMatchIn(data).get.toString
     }
     null
   }

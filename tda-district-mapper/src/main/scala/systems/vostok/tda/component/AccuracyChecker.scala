@@ -50,7 +50,7 @@ object AccuracyChecker {
     if (!(building == null || building == "" || building.contains(" "))) {
       val buildingUp = building.toUpperCase
 
-      if (buildingUp forall Character.isDigit) {
+      if (buildingUp.matches("[0-9/]*")) {
         return true
       } else if (buildingUp.matches(".\\d*\\/.\\d*")) {
         val pattern = "(.\\d*)\\/(.\\d*)".r
