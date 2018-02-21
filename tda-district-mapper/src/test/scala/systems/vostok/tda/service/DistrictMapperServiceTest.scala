@@ -10,7 +10,8 @@ import systems.vostok.tda.domain.{Address, Mapper}
 class DistrictMapperServiceTest extends FunSuite {
 
   val mapperEmpty = List(
-    new Mapper("svt", "", "cnt")
+    new Mapper("svt", "", "cnt"),
+    new Mapper("svt", null, "cnt")
   )
 
   val mapperSimple = List(
@@ -47,7 +48,7 @@ class DistrictMapperServiceTest extends FunSuite {
   val testData = List(
     List(new Address("svt", "24"), mapperEmpty, "cnt"),
 
-    List(new Address("svt", "25"), mapperSimple, "erte"),
+    List(new Address("svt", "25"), mapperSimple, "dal"),
     List(new Address("svt", "3"), mapperSimple, "cnt"),
     List(new Address("svt", "3"), mapperLiteral, "cnt"),
     List(new Address("svt", "24"), mapperLiteral, "cnt"),
@@ -74,7 +75,7 @@ class DistrictMapperServiceTest extends FunSuite {
     List(new Address("svt", "25А"), mapperMix, "rog")
   )
 
-  test("IllegalBuildingFormatException should be thrown") {
+  test("District mapper test") {
     testData.foreach { data =>
       new DistrictMapperService().getDistrict(data(1).asInstanceOf[List[Mapper]], data(0).asInstanceOf[Address]) should equal(data(2).toString)
     }

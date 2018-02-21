@@ -26,11 +26,7 @@ class AddressAccuracyCheckerTest extends FunSuite {
     val illegalBuildingFormatExceptionAddress = List(
       new Address("svt", "3АА"),
       new Address("svt", "3F"),
-      // fail here
-      //new Address("svt", "3/01"),
       new Address("svt", "3/А"),
-      // fail here
-      //new Address("svt", "3//1"),
       new Address("svt", "3/1А"),
       new Address("svt", "test")
     )

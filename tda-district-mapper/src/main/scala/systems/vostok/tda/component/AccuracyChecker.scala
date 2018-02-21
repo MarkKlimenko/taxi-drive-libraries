@@ -5,8 +5,6 @@ import systems.vostok.tda.exception._
 
 object AccuracyChecker {
 
-  //TODO: refactor
-
   def checkAddressConsistence(address: Address): Boolean = {
     checkEntityId(address.streetId)
     checkEntityId(address.building)
@@ -22,7 +20,7 @@ object AccuracyChecker {
       checkEntityId(mapperLine.streetId)
       checkEntityId(mapperLine.districtId)
 
-      if (mapperLine.building != "") {
+      if (mapperLine.building != "" && mapperLine.building != null) {
         checkBuilding(mapperLine.building.split('-')(0))
         checkBuilding(mapperLine.building.split('-')(1))
       }

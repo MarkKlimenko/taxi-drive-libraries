@@ -9,7 +9,7 @@ import systems.vostok.tda.util.constants.BuildingType._
 object DistrictMapper {
 
   def mapAddressToDistrict(adoptedMapperData: List[Mapper], building: String, buildingType: BuildingType): String = {
-    if (adoptedMapperData.head.building == "") {
+    if (adoptedMapperData.head.building == "" || adoptedMapperData.head.building == null) {
       adoptedMapperData.head.districtId
     } else {
       def mapperOption = adoptedMapperData.find(checkAccordance(_, building, buildingType))

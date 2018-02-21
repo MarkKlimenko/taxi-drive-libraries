@@ -12,6 +12,7 @@ class MapperAccuracyCheckerTest extends FunSuite {
 
   val mapperData = List(
     new Mapper("test", "", "test"),
+    new Mapper("test", null, "test"),
     new Mapper("test", "1-1/6", "test"),
     new Mapper("test", "1/6-24А", "test"),
     new Mapper("test", "24Б-50", "test")

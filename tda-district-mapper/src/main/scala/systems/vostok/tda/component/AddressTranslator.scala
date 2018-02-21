@@ -40,7 +40,7 @@ object AddressTranslator {
 
   protected def translateDataForSimple(mappingData: List[Mapper]): List[Mapper] = {
     mappingData.map { mapper =>
-      if (mapper.building == "") {
+      if (mapper.building == "" || mapper.building == null) {
         mapper
       } else {
         val rawBuildingsFrom = mapper.building.split("-").head
